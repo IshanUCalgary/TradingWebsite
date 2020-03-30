@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Modern Trading</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <body>
+      <div class="login-box" id="login">
+        <h1>Welcome</h1>
+        <div class="textbox">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <input type="text" , placeholder="Username" , name="" , value="" />
+        </div>
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input
+            type="password"
+            ,
+            placeholder="Password"
+            ,
+            name=""
+            ,
+            value=""
+          />
+        </div>
+        <div class="row">
+          <div class="column" onclick="location.href='loggedIn.html'">
+            <input type="button" , class="btn" , value="Sign In" />
+          </div>
+          <div class="column" onclick="forward()">
+            <input type="button" , class="btn" , value="Sign Up" />
+          </div>
+        </div>
+      </div>
+      <div class="register-box" id="register">
+        <h1>Create your account</h1>
+        <div class="textbox">
+          <i class="fa fa-id-card-o" aria-hidden="true"></i>
+          <input type="text" , placeholder="Full Name" , name="" , value="" />
+        </div>
+        <div class="textbox">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <input type="text" , placeholder="Username" , name="" , value="" />
+        </div>
+        <div class="textbox">
+          <i class="fa fa-at" aria-hidden="true"></i>
+          <input type="text" , placeholder="E-mail" , name="" , value="" />
+        </div>
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input
+            type="password"
+            ,
+            placeholder="Password"
+            ,
+            name=""
+            ,
+            value=""
+          />
+        </div>
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input type="password" , placeholder="Confirm" , name="" , value="" />
+        </div>
+        <div class="row">
+          <div class="column" , onclick="back()">
+            <input type="button" , class="btn" , value="Sign In" />
+          </div>
+          <div class="column" , onclick="register()">
+            <input type="button" , class="btn" , value="Sign Up" />
+          </div>
+        </div>
+      </div>
+
+      <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+
+        function back() {
+          x.style.display = "block";
+          y.style.display = "none";
+        }
+
+        function register() {}
+
+        function forward() {
+          x.style.display = "none";
+          y.style.display = "block";
+        }
+
+        function login() {}
+      </script>
+    </body>
+  </head>
+</html>

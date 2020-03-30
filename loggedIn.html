@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/log.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="row">
+        <div class="column chart">
+          <canvas id="myChart" width="800" height="400"></canvas>
+        </div>
+        <div class="column trade">
+          <h1>Search Stocks</h1>
+          <i class="fa fa-line-chart" aria-hidden="true"></i>
+          <input type="text" , placeholder="Stock Symbol" />
+          <button onclick="find()">Find</button>
+          <h2>Current Price: $<span id="price"></span></h2>
+          <input type="text" , placeholder="Amount" />
+          <button onclick="find()">Buy</button>
+          <input type="text" , placeholder="Amount" />
+          <button onclick="find()">Sell</button>
+          <h2>Shares Owned: 10000</h2>
+        </div>
+      </div>
+      <script>
+        const sXVal = [];
+        const sYVal = [];
+
+        const cP = 0;
+
+        let symbol = "AMZN";
+        const API_url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&outputsize=compact&apikey=2NHUZNZA9ZB40EX9`;
+        async function getData() {
+          let sx = [];
+          let sy = [];
+
+          const response = await fetch(API_url);
+          const data = await response.json();
+          console.log(data);
+
+          for (var key in data["Time Series (Daily)"]) {
+            sx.push(key);
+            sy.push(data["Time Series (Daily)"][key]["1. open"]);
+          }
+
+          for (var i = sx.length; i > 0; i--) {
+            sXVal.push(sx[i]);
+          }
+          for (var i = sy.length; i > 0; i--) {
+            sYVal.push(sy[i]);
+          }
+
+          return data;
+        }
+
+        async function chartIt() {
+          await getData();
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: sXVal,
+              datasets: [
+                {
+                  label: `${symbol} Stock Price`,
+                  data: sYVal,
+                  pointBackgroundColor: ["rgba(39, 210, 213, 1)"],
+                  fill: false,
+                  borderColor: ["rgba(39, 210, 213, 1)"],
+                  borderWidth: 1,
+                  pointBackgroundColor: "#808080",
+                  pointBorderColor: "rgba(39, 210, 213, 1)"
+                }
+              ]
+            },
+            options: {
+              responsive: false
+            }
+          });
+        }
+
+        chartIt();
+        document.getElementById("price").textContent = 1963.95;
+      </script>
+    </div>
+    <div class="news">
+      <h1>Latest News</h1>
+      <div id="you">
+        <!-- 24-7 Press Release Newswire Landing Page Widget Code Starts Here -->
+        <script
+          type="text/javascript"
+          src="https://news.24-7pressrelease.com/247pr-news-widget.js?widgettitle=News&amp;categories=174,175,176,81,103,105,117,178,118,179,304,180,306,133,134,140,142,141,169,172,173,192,193,309,181,418,182,183,419,228,230,232,233,184,239,185,242,313,186,187,245,188,189,421,243,191,279,280,&amp;showRelease=1&amp;width=auto&amp;headlinebold=1&amp;headlinesonly=1&amp;headlinecolor=2d57a1&amp;briefcolor=666666&amp;textcolor=333333&amp;typeface=arial&amp;fontsize=11&amp;width=auto&amp;headlinesepstyle=dotted&amp;showimages=0&amp;numstories=5&amp;bgcolor=ffffff&amp;urldest=247pr"
+        ></script>
+        <!-- 24-7 Press Release Newswire Landing Page Widget Code Ends Here -->
+      </div>
+    </div>
+    <div class="bank">
+      <h1>Quick Banking</h1>
+      <h2>Current Balance: $10,000</h2>
+      <div class="damn">
+        <input type="text" , placeholder="Amount" />
+        <button onclick="find()">Withdraw</button>
+        <input type="text" , placeholder="Amount" />
+        <button onclick="find()">Deposit</button>
+      </div>
+    </div>
+  </body>
+</html>
