@@ -14,7 +14,7 @@
         <div class="column trade">
           <h1>Search Stocks</h1>
           <i class="fa fa-line-chart" aria-hidden="true"></i>
-          <input type="text" , placeholder="Stock Symbol" />
+          <input id="Sym" type="text" , placeholder="Stock Symbol" />
           <button onclick="find()">Find</button>
           <h2>Current Price: $<span id="price"></span></h2>
           <input type="text" , placeholder="Amount" />
@@ -25,8 +25,8 @@
         </div>
       </div>
       <script>
-        const sXVal = [];
-        const sYVal = [];
+        var sXVal = [];
+        var sYVal = [];
 
         const cP = 0;
 
@@ -83,6 +83,15 @@
 
         chartIt();
         document.getElementById("price").textContent = 1963.95;
+
+        function find() {
+          sXVal.splice(0, sXVal.length);
+          sYVal.splice(0, sYVal.length);
+          var sym = document.getElementById("Sym").value;
+
+          symbol = sym;
+          chartIt();
+        }
       </script>
     </div>
     <div class="news">
@@ -98,13 +107,54 @@
     </div>
     <div class="bank">
       <h1>Quick Banking</h1>
-      <h2>Current Balance: $10,000</h2>
+      <h2>Current Balance: $<span id="cB">10000</span></h2>
       <div class="damn">
-        <input type="text" , placeholder="Amount" />
-        <button onclick="find()">Withdraw</button>
-        <input type="text" , placeholder="Amount" />
-        <button onclick="find()">Deposit</button>
+        <input id="wD" type="number" , placeholder="Amount" />
+        <button onclick="Withdraw()">Withdraw</button>
+        <input id="De" type="number" , placeholder="Amount" />
+        <button onclick="Deposit()">Deposit</button>
+        <p id="sW">Successfull withdrawal</p>
+        <p id="sD">Successfull deposit</p>
+        <p id="iF">Insufficient funds for withdrawal</p>
+        <p id="aG">Amount has to be greater than 0 for deposit</p>
       </div>
     </div>
+    <script>
+      var currentBalance = 10000;
+
+      function Withdraw() {
+        var amount = document.getElementById("wD").value;
+        if (currentBalance >= amount) {
+          currentBalance -= amount;
+          document.getElementById("sW").style.display = "block";
+          document.getElementById("aG").style.display = "none";
+          document.getElementById("sD").style.display = "none";
+          document.getElementById("iF").style.display = "none";
+        } else {
+          document.getElementById("iF").style.display = "block";
+          document.getElementById("sW").style.display = "none";
+          document.getElementById("sD").style.display = "none";
+          document.getElementById("aG").style.display = "none";
+        }
+        document.getElementById("cB").textContent = currentBalance;
+      }
+
+      function Deposit() {
+        var amount = document.getElementById("De").value;
+        if (amount > 0) {
+          currentBalance = parseInt(amount) + parseInt(currentBalance);
+          document.getElementById("sD").style.display = "block";
+          document.getElementById("sW").style.display = "none";
+          document.getElementById("aG").style.display = "none";
+          document.getElementById("iF").style.display = "none";
+        } else {
+          document.getElementById("aG").style.display = "block";
+          document.getElementById("sW").style.display = "none";
+          document.getElementById("sD").style.display = "none";
+          document.getElementById("iF").style.display = "none";
+        }
+        document.getElementById("cB").textContent = currentBalance;
+      }
+    </script>
   </body>
 </html>
