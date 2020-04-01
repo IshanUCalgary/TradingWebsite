@@ -17,18 +17,42 @@
           <input id="Sym" type="text" , placeholder="Stock Symbol" />
           <button onclick="find()">Find</button>
           <h2>Current Price: $<span id="price"></span></h2>
-          <input type="text" , placeholder="Amount" />
-          <button onclick="find()">Buy</button>
-          <input type="text" , placeholder="Amount" />
-          <button onclick="find()">Sell</button>
-          <h2>Shares Owned: 10000</h2>
+          <input type="number" , placeholder="Amount" id="aB" />
+          <button onclick="Buy()">Buy</button>
+          <input type="number" , placeholder="Amount" id="aS" />
+          <button onclick="Sell()">Sell</button>
+          <h2>Shares Owned: <span id="sO"></span></h2>
         </div>
       </div>
       <script>
+        var cP = 1949.72;
+        var sO = 0;
+        document.getElementById("price").textContent = cP;
+
+        function Buy() {
+          var amount = document.getElementById("aB").value;
+          alert(amount);
+          if (amount * cP < currentBalance) {
+            sO = amount;
+            document.getElementById("sO").textContent = sO;
+            currentBalance -= amount * cP;
+            document.getElementById("cB").textContent = currentBalance;
+          }
+        }
+
+        function Sell() {
+          var amount = document.getElementById("aS").value;
+          if (amount <= sO) {
+            sO -= amount;
+            document.getElementById("sO").textContent = sO;
+            currentBalance += amount * cP;
+            document.getElementById("cB").textContent = currentBalance;
+          }
+        }
+      </script>
+      <script>
         var sXVal = [];
         var sYVal = [];
-
-        const cP = 0;
 
         let symbol = "AMZN";
         const API_url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&outputsize=compact&apikey=2NHUZNZA9ZB40EX9`;
@@ -82,7 +106,6 @@
         }
 
         chartIt();
-        document.getElementById("price").textContent = 1963.95;
 
         function find() {
           sXVal.splice(0, sXVal.length);
